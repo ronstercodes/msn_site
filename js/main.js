@@ -8,6 +8,11 @@ if (toggle) {
   });
 }
 
+// Marquee: clone the track so the loop is seamless
+document.querySelectorAll('.marquee-track').forEach(track => {
+  track.append(...Array.from(track.children, node => node.cloneNode(true)));
+});
+
 // Lightbox for gallery images
 const galleryLinks = Array.from(document.querySelectorAll('.gallery a'));
 

@@ -371,28 +371,55 @@ a { color: inherit; }
 .lightbox .lb-prev { left: 12px; top: 50%; transform: translateY(-50%); }
 .lightbox .lb-next { right: 12px; top: 50%; transform: translateY(-50%); }
 
-/* ---------- Sponsors ---------- */
-.sponsors {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 30px;
+/* ---------- Logo marquees (featured booths + sponsors) ----------
+   White-silhouette logos at reduced opacity read as grey on the dark
+   background. Pauses on hover; disabled under reduced-motion. */
+.marquee {
+  overflow: hidden;
+  padding: 18px 0;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
 }
 
-.sponsor-tile {
+.marquee-track {
   display: flex;
   align-items: center;
-  justify-content: center;
-  background: var(--white);
-  border-radius: 5px;
-  padding: 26px 40px;
-  transition: opacity 0.15s;
+  gap: clamp(40px, 5.5vw, 78px);
+  width: max-content;
 }
 
-.sponsor-tile:hover { opacity: 0.88; }
+.marquee-track.left  { animation: slide-l 52s linear infinite; }
+.marquee-track.right { animation: slide-r 60s linear infinite; }
 
-.sponsor-tile img {
-  height: 52px;
+@keyframes slide-l { from { transform: translateX(0); }    to { transform: translateX(-50%); } }
+@keyframes slide-r { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track { animation-play-state: paused; }
+
+.marquee img {
+  height: 40px;
   width: auto;
+  flex: none;
+  opacity: 0.6;
+  transition: opacity 0.15s ease;
+}
+
+.marquee a:hover img,
+.marquee a:focus-visible img { opacity: 1; }
+
+.marquee img.lg-rice       { height: 31px; }
+.marquee img.lg-quarknet   { height: 35px; }
+.marquee img.lg-acs        { height: 37px; }
+.marquee img.lg-aops       { height: 37px; }
+.marquee img.lg-hcc        { height: 43px; }
+.marquee img.lg-uh         { height: 43px; }
+.marquee img.lg-mathnasium { height: 43px; }
+.marquee img.lg-baylor     { height: 54px; }
+.marquee img.lg-kslb       { height: 54px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track.left, .marquee-track.right { animation: none; }
 }
 
 /* ---------- Mobile ---------- */
@@ -461,7 +488,7 @@ a { color: inherit; }
 
   .gallery, .gallery.cols-3 { grid-template-columns: repeat(2, 1fr); }
 
-  .sponsor-tile { padding: 20px 28px; }
-
-  .sponsor-tile img { height: 40px; }
+  .marquee img { height: 32px; }
+  .marquee img.lg-baylor, .marquee img.lg-kslb { height: 44px; }
+  .marquee img.lg-rice { height: 26px; }
 }
