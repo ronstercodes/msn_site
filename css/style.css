@@ -112,6 +112,8 @@ a { color: inherit; }
 
 .brand-title strong { font-weight: 900; }
 
+.brand-title { text-transform: uppercase; }
+
 .brand-slogan {
   margin-top: 10px;
   font-size: 15.2px;
@@ -136,6 +138,7 @@ a { color: inherit; }
 .nav li { padding: 7px 0; text-align: center; }
 
 .nav a {
+  text-transform: uppercase;
   display: block;
   padding: 0 50px;
   font-size: 15.2px;
@@ -192,6 +195,7 @@ a { color: inherit; }
 }
 
 .hero h1 {
+  text-transform: uppercase;
   font-size: 72px;
   font-weight: 500;
   line-height: 1.5;
@@ -212,6 +216,7 @@ a { color: inherit; }
 .section-inner.wide { max-width: 1160px; }
 
 .section h1 {
+  text-transform: uppercase;
   font-size: 37px;
   font-weight: 500;
   line-height: 1.35;
