@@ -24,11 +24,7 @@
         "question": "Which best describes you?",
         "options": [
           {
-            "value": "Elementary school student attending Math & Science Night",
-            "branch": "attendee"
-          },
-          {
-            "value": "Middle school student attending Math & Science Night",
+            "value": "Student attending MSN",
             "branch": "attendee"
           },
           {
@@ -132,17 +128,6 @@
               ]
             },
             {
-              "key": "teaching_experience",
-              "type": "choice",
-              "question": "How much previous experience do you have teaching, mentoring, or explaining STEM concepts to younger students?",
-              "options": [
-                "None",
-                "A little",
-                "Some",
-                "A lot"
-              ]
-            },
-            {
               "key": "volunteer_skills",
               "type": "grid",
               "question": "How much do you agree with each statement?",
@@ -170,6 +155,10 @@
                 {
                   "key": "adapt",
                   "text": "I can change how I explain something when another person does not understand it."
+                },
+                {
+                  "key": "experience",
+                  "text": "I have a lot of previous experience teaching, mentoring, or explaining STEM concepts to younger students."
                 }
               ]
             }
@@ -193,11 +182,7 @@
         "question": "Which best describes you?",
         "options": [
           {
-            "value": "Elementary school student attending Math & Science Night",
-            "branch": "attendee"
-          },
-          {
-            "value": "Middle school student attending Math & Science Night",
+            "value": "Student attending MSN",
             "branch": "attendee"
           },
           {
