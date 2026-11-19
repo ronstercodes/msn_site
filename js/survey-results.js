@@ -216,7 +216,7 @@
     say('Loading…', false);
     try {
       const [formsResponse, dataResponse] = await Promise.all([
-        fetch('/survey/forms.json'),
+        fetch('/survey/forms.json', { cache: 'no-cache' }),
         fetch('/api/survey-results', {
           headers: { Authorization: `Bearer ${keyInput.value}` },
           cache: 'no-store',

@@ -621,6 +621,108 @@ button.btn { font-family: var(--font); letter-spacing: inherit; cursor: pointer;
 .survey-thanks h2 { font-size: 30px; font-weight: 700; color: var(--white); margin-bottom: 14px; }
 .survey-thanks h2:focus { outline: none; }
 
+/* Grade swipe picker */
+.swipe-readout {
+  margin: 0 0 6px;
+  min-height: 1.2em;
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1.2;
+  text-align: center;
+  color: var(--white);
+}
+.swipe:not(.has-value) .swipe-readout {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-dim);
+  animation: swipe-nudge 1.8s ease-in-out infinite;
+}
+@keyframes swipe-nudge { 0%, 100% { transform: translateX(-5px); } 50% { transform: translateX(5px); } }
+.swipe-frame { position: relative; }
+.swipe-strip {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 22px 0 26px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
+}
+.swipe-strip::-webkit-scrollbar { display: none; }
+.swipe-strip::before { content: ""; flex: 0 0 var(--pad-start, calc(50% - 51px)); }
+.swipe-strip::after { content: ""; flex: 0 0 var(--pad-end, calc(50% - 42px)); }
+.swipe-item {
+  flex: none;
+  scroll-snap-align: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.swipe-item input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.swipe-bubble {
+  display: grid;
+  place-items: center;
+  min-width: 84px;
+  height: 84px;
+  max-width: 150px;
+  padding: 0 16px;
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1.05;
+  text-align: center;
+  color: var(--white);
+  background: #1c1c1c;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: 22px;
+  /* The shrink-away effect lives here, not on the snap target, so it can't nudge the scroll position. */
+  transform: scale(calc(1 - var(--d, 0) * 0.3));
+  opacity: calc(1 - var(--d, 0) * 0.5);
+  transition: background 0.15s, border-color 0.15s, color 0.15s, box-shadow 0.15s;
+}
+.swipe-item input:checked + .swipe-bubble {
+  color: #15151b;
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 6px 0 #6c76b5;
+}
+.swipe-item input:focus-visible + .swipe-bubble { outline: 3px solid var(--white); outline-offset: 3px; }
+.swipe-caret {
+  width: 0;
+  height: 0;
+  margin: -16px auto 0;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-bottom: 12px solid var(--accent);
+}
+.swipe-other { margin-top: 18px; }
+@media (prefers-reduced-motion: reduce) { .swipe:not(.has-value) .swipe-readout { animation: none; } }
+
+/* Back buttons */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 18px;
+  margin-bottom: 22px;
+  font-weight: 600;
+  color: var(--white);
+  text-decoration: none;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  border-radius: 999px;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.back-link:active { background: rgba(159, 168, 218, 0.28); }
+.back-link:focus-visible { outline: 3px solid var(--white); outline-offset: 3px; }
+@media (hover: hover) { .back-link:hover { border-color: var(--accent); background: rgba(159, 168, 218, 0.14); } }
+.survey-actions .back-link { margin-bottom: 0; }
+
 /* Survey results */
 .results-h { font-size: 22px; font-weight: 700; color: var(--white); margin: 44px 0 16px; }
 .results-sub { font-size: 18px; font-weight: 600; color: var(--white); margin: 30px 0 12px; }
@@ -716,6 +818,7 @@ button.btn { font-family: var(--font); letter-spacing: inherit; cursor: pointer;
   .survey-pick .go { padding: 12px 18px; font-size: 15px; }
 
   .survey-page .section { padding: 26px 20px 60px; }
+  .swipe-frame { margin: 0 -20px; }
   .survey-actions { align-self: stretch; }
   .survey-actions .btn { width: 100%; }
   .bar-row { grid-template-columns: 1fr 36px; }

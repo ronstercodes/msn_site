@@ -113,12 +113,148 @@
     return wrap;
   };
 
-  const build = question => ({
-    choice: buildChoice,
-    select: buildSelect,
-    grid: buildGrid,
-    text: buildText,
-  }[question.type](question));
+  /* ---------- grade picker: swipe a row of bubbles sideways, or tap one ---------- */
+
+  const gradeWords = option => {
+    if (/^\d+$/.test(option)) return `Grade ${option}`;
+    if (option === 'K') return 'Kindergarten';
+    return option;
+  };
+
+  const bubbleText = option => {
+    const ordinal = option.match(/^(\d+(?:st|nd|rd|th)) Grade$/);
+    return ordinal ? ordinal[1] : option;
+  };
+
+  // Underneath it is still an ordinary radio group, so keyboards and screen readers work.
+  const buildSwipe = question => {
+    const set = el('fieldset', 'swipe');
+    set.append(el('legend', '', question.question));
+
+    const prompt = '‹  Swipe to pick your grade  ›';
+    const readout = el('div', 'swipe-readout', prompt);
+    readout.setAttribute('aria-live', 'polite');
+
+    const frame = el('div', 'swipe-frame');
+    const strip = el('div', 'swipe-strip');
+    const options = question.other ? [...question.options, 'Other'] : question.options;
+    const items = options.map(option => {
+      const item = el('label', 'swipe-item');
+      const input = el('input');
+      input.type = 'radio';
+      input.name = question.key;
+      input.value = option;
+      input.setAttribute('aria-label', gradeWords(option));
+      item.append(input, el('span', 'swipe-bubble', bubbleText(option)));
+      strip.append(item);
+      return item;
+    });
+    frame.append(strip, el('div', 'swipe-caret'));
+    set.append(readout, frame);
+
+    let otherBox = null;
+    if (question.other) {
+      otherBox = el('div', 'swipe-other');
+      otherBox.hidden = true;
+      const detail = el('input', 'other-text');
+      detail.type = 'text';
+      detail.name = `${question.key}__other`;
+      detail.maxLength = 100;
+      detail.autocomplete = 'off';
+      detail.placeholder = 'Type your grade';
+      detail.setAttribute('enterkeyhint', 'done');
+      detail.setAttribute('aria-label', `${question.question} Other, please specify`);
+      otherBox.append(detail);
+      set.append(otherBox);
+    }
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let touched = false;   // only a person's own swipe, tap or key press may choose a grade
+    let settle = 0;
+    let frameRequest = 0;
+
+    const show = () => {
+      const picked = strip.querySelector('input:checked');
+      set.classList.toggle('has-value', Boolean(picked));
+      readout.textContent = picked ? gradeWords(picked.value) : prompt;
+      if (otherBox) otherBox.hidden = !(picked && picked.value === 'Other');
+    };
+
+    // Bubbles shrink and fade the further they are from the middle.
+    const scale = () => {
+      frameRequest = 0;
+      const box = strip.getBoundingClientRect();
+      if (!box.width) return;
+      // Leave exactly enough room at each end for the first and last bubble to reach the middle.
+      strip.style.setProperty('--pad-start', `${(strip.clientWidth - items[0].offsetWidth) / 2}px`);
+      strip.style.setProperty('--pad-end', `${(strip.clientWidth - items[items.length - 1].offsetWidth) / 2}px`);
+      const middle = box.left + box.width / 2;
+      for (const item of items) {
+        const r = item.getBoundingClientRect();
+        const distance = Math.min(1, Math.abs(r.left + r.width / 2 - middle) / (box.width / 2));
+        item.style.setProperty('--d', distance.toFixed(3));
+      }
+    };
+
+    const goTo = item => {
+      strip.scrollTo({
+        left: item.offsetLeft - (strip.clientWidth - item.offsetWidth) / 2,
+        behavior: reduced ? 'auto' : 'smooth',
+      });
+    };
+
+    const nearest = () => {
+      const box = strip.getBoundingClientRect();
+      const middle = box.left + box.width / 2;
+      let best = items[0];
+      let bestDistance = Infinity;
+      for (const item of items) {
+        const r = item.getBoundingClientRect();
+        const distance = Math.abs(r.left + r.width / 2 - middle);
+        if (distance < bestDistance) { best = item; bestDistance = distance; }
+      }
+      return best;
+    };
+
+    // A tap or an arrow key picked one: slide it to the middle.
+    strip.addEventListener('change', event => {
+      touched = true;
+      show();
+      goTo(event.target.closest('.swipe-item'));
+    });
+
+    for (const type of ['pointerdown', 'touchstart', 'wheel', 'keydown']) {
+      strip.addEventListener(type, () => { touched = true; }, { passive: true });
+    }
+
+    // After a swipe comes to rest, whatever sits in the middle is the answer.
+    strip.addEventListener('scroll', () => {
+      if (!frameRequest) frameRequest = requestAnimationFrame(scale);
+      clearTimeout(settle);
+      settle = setTimeout(() => {
+        if (!touched) return;
+        const input = nearest().querySelector('input');
+        if (!input.checked) {
+          input.checked = true;
+          show();
+        }
+      }, 120);
+    }, { passive: true });
+
+    if (typeof ResizeObserver === 'function') new ResizeObserver(scale).observe(strip);
+    show();
+    return set;
+  };
+
+  const build = question => {
+    if (question.ui === 'swipe') return buildSwipe(question);
+    return ({
+      choice: buildChoice,
+      select: buildSelect,
+      grid: buildGrid,
+      text: buildText,
+    })[question.type](question);
+  };
 
   /* ---------- the form ---------- */
 
@@ -210,7 +346,9 @@
     status.id = 'survey-status';
     status.setAttribute('role', 'status');
     status.setAttribute('aria-live', 'polite');
-    actions.append(submit, status);
+    const back = el('a', 'back-link', '\u2190 Wrong survey? Go back');
+    back.href = '/survey/';
+    actions.append(submit, status, back);
     form.append(actions);
 
     // Picking a role shows the questions for that group.
@@ -262,7 +400,7 @@
 
   /* ---------- start ---------- */
 
-  fetch('/survey/forms.json')
+  fetch('/survey/forms.json', { cache: 'no-cache' })
     .then(response => {
       if (!response.ok) throw new Error('forms');
       return response.json();

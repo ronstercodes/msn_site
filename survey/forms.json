@@ -36,34 +36,30 @@
           }
         ]
       },
-      "common": [
-        {
-          "key": "grade",
-          "type": "select",
-          "question": "Which grade are you in?",
-          "options": [
-            "Pre-K",
-            "K",
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12"
-          ]
-        }
-      ],
+      "common": [],
       "branches": {
         "attendee": {
           "title": "Student Attendee Survey",
           "intro": "Please answer the following questions based on how you feel before participating in Math & Science Night.",
           "questions": [
+            {
+              "key": "grade",
+              "type": "select",
+              "question": "Which grade are you in?",
+              "options": [
+                "Pre-K",
+                "K",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8"
+              ],
+              "ui": "swipe"
+            },
             {
               "key": "attended_before",
               "type": "choice",
@@ -202,30 +198,28 @@
           }
         ]
       },
-      "common": [
-        {
-          "key": "grade",
-          "type": "choice",
-          "question": "What grade range are you in?",
-          "options": [
-            "1st Grade",
-            "2nd Grade",
-            "3rd Grade",
-            "4th Grade",
-            "5th Grade",
-            "6th Grade",
-            "7th Grade",
-            "8th Grade",
-            "High School Volunteer"
-          ],
-          "other": true
-        }
-      ],
+      "common": [],
       "branches": {
         "attendee": {
           "title": "Student Attendee Survey",
           "intro": "Please answer the following questions based on how you feel before participating in Math & Science Night.",
           "questions": [
+            {
+              "key": "grade",
+              "type": "choice",
+              "question": "What grade range are you in?",
+              "options": [
+                "1st Grade",
+                "2nd Grade",
+                "3rd Grade",
+                "4th Grade",
+                "5th Grade",
+                "6th Grade",
+                "7th Grade",
+                "8th Grade"
+              ],
+              "ui": "swipe"
+            },
             {
               "key": "attended_before",
               "type": "choice",
