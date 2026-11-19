@@ -30,7 +30,7 @@
     input.name = name;
     input.value = value;
     if (required) input.required = true;
-    label.append(input, el('span', '', text));
+    label.append(input, el('span', 'mark'), el('span', 'choice-text', text));
     return { label, input };
   };
 
@@ -46,6 +46,7 @@
       detail.name = `${question.key}__other`;
       detail.maxLength = 100;
       detail.autocomplete = 'off';
+      detail.setAttribute('enterkeyhint', 'done');
       detail.setAttribute('aria-label', `${question.question} Other, please specify`);
       // Typing in the box means they meant "Other".
       detail.addEventListener('input', () => { label.querySelector('input').checked = true; });
@@ -89,7 +90,7 @@
         input.type = 'radio';
         input.name = `${question.key}__${row.key}`;
         input.value = level;
-        chip.append(input, el('span', '', level));
+        chip.append(input, el('span', 'dot'), el('span', 'chip-text', level));
         options.append(chip);
       });
       line.append(options);
