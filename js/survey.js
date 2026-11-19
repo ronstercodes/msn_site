@@ -141,8 +141,15 @@
 
   /* ---------- grade picker: swipe a row of bubbles sideways, or tap one ---------- */
 
+  // 1 -> 1st, 2 -> 2nd, 3 -> 3rd, 6 -> 6th, 11 -> 11th (display only; the saved answer is unchanged)
+  const ordinal = number => {
+    const lastTwo = number % 100;
+    if (lastTwo >= 11 && lastTwo <= 13) return `${number}th`;
+    return `${number}${{ 1: 'st', 2: 'nd', 3: 'rd' }[number % 10] || 'th'}`;
+  };
+
   const gradeWords = option => {
-    if (/^\d+$/.test(option)) return `Grade ${option}`;
+    if (/^\d+$/.test(option)) return `${ordinal(Number(option))} Grade`;
     if (option === 'K') return 'Kindergarten';
     return option;
   };
