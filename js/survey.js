@@ -282,6 +282,48 @@
     })[question.type](question);
   };
 
+  /* ---------- the research notice: folded and faded until "Read full instructions" ---------- */
+
+  // Nothing is removed. The whole text stays on the page (screen readers still read it);
+  // it is only clipped until the button opens it.
+  const buildIntro = paragraphs => {
+    const wrap = el('div', 'intro-wrap collapsed');
+    const body = el('div', 'intro-body');
+    const intro = el('div', 'survey-intro');
+    intro.id = 'survey-intro';
+    for (const paragraph of paragraphs) intro.append(el('p', '', paragraph));
+    const fade = el('div', 'intro-fade');
+    fade.setAttribute('aria-hidden', 'true');
+    body.append(intro, fade);
+
+    const toggle = el('button', 'intro-toggle', 'Read full instructions');
+    toggle.type = 'button';
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-controls', 'survey-intro');
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let timer = 0;
+    toggle.addEventListener('click', () => {
+      clearTimeout(timer);
+      const opening = wrap.classList.contains('collapsed');
+      intro.style.maxHeight = `${intro.scrollHeight}px`;
+      if (opening) {
+        wrap.classList.remove('collapsed');
+        timer = setTimeout(() => { intro.style.maxHeight = 'none'; }, reduced ? 0 : 350);
+      } else {
+        void intro.offsetHeight; // register the open height so the fold animates
+        wrap.classList.add('collapsed');
+        intro.style.maxHeight = '';
+        toggle.scrollIntoView({ block: 'nearest' });
+      }
+      toggle.setAttribute('aria-expanded', String(opening));
+      toggle.textContent = opening ? 'Show less' : 'Read full instructions';
+    });
+
+    wrap.append(body, toggle);
+    return wrap;
+  };
+
   /* ---------- the form ---------- */
 
   const checked = name => form.querySelector(`input[name="${CSS.escape(name)}"]:checked`);
@@ -334,9 +376,7 @@
     form.id = 'survey-form';
     form.noValidate = true;
 
-    const intro = el('div', 'survey-intro');
-    for (const paragraph of current.intro) intro.append(el('p', '', paragraph));
-    form.append(intro);
+    form.append(buildIntro(current.intro));
 
     const roleSet = el('fieldset');
     roleSet.append(el('legend', '', current.role.question));
