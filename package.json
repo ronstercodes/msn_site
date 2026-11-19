@@ -1,0 +1,9 @@
+{
+  "name": "msn-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Math and Science Night website",
+  "dependencies": {
+    "@vercel/blob": "2.9.0"
+  }
+}

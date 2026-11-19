@@ -1,0 +1,450 @@
+{
+  "scale": [
+    "Strongly disagree",
+    "Disagree",
+    "Not sure",
+    "Agree",
+    "Strongly agree"
+  ],
+  "forms": {
+    "before": {
+      "title": "Math & Science Night Research Survey: Before the Event",
+      "label": "Before the event",
+      "time": "2-3 minutes",
+      "intro": [
+        "This brief survey is part of a research study evaluating Math & Science Night at Dulles High School. The survey asks about your current experiences and attitudes toward STEM.",
+        "Participation is voluntary. Your answers will be used only for research and program evaluation. Responses will be analyzed in summary form and will not be used to identify individual participants.",
+        "Please do not enter your name, student ID, email address, or any other personally identifying information in this survey.",
+        "There are no right or wrong answers. Please answer honestly.",
+        "Estimated time: 2-3 minutes."
+      ],
+      "role": {
+        "key": "role",
+        "question": "Which best describes you?",
+        "options": [
+          {
+            "value": "Elementary school student attending Math & Science Night",
+            "branch": "attendee"
+          },
+          {
+            "value": "Middle school student attending Math & Science Night",
+            "branch": "attendee"
+          },
+          {
+            "value": "High school student volunteer",
+            "branch": "volunteer"
+          }
+        ]
+      },
+      "common": [
+        {
+          "key": "grade",
+          "type": "select",
+          "question": "Which grade are you in?",
+          "options": [
+            "Pre-K",
+            "K",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12"
+          ]
+        }
+      ],
+      "branches": {
+        "attendee": {
+          "title": "Student Attendee Survey",
+          "intro": "Please answer the following questions based on how you feel before participating in Math & Science Night.",
+          "questions": [
+            {
+              "key": "attended_before",
+              "type": "choice",
+              "question": "Have you attended Math & Science Night before?",
+              "options": [
+                "Yes",
+                "No",
+                "Not Sure"
+              ]
+            },
+            {
+              "key": "stem_attitudes",
+              "type": "grid",
+              "question": "How much do you agree with each statement?",
+              "rows": [
+                {
+                  "key": "interested",
+                  "text": "I am interested in science, technology, engineering, or math."
+                },
+                {
+                  "key": "hands_on",
+                  "text": "I enjoy doing hands-on STEM activities."
+                },
+                {
+                  "key": "confident_trying",
+                  "text": "I feel confident trying a STEM activity, even when it seems difficult."
+                },
+                {
+                  "key": "curious",
+                  "text": "I am curious to learn more about STEM topics."
+                },
+                {
+                  "key": "more_activities",
+                  "text": "I would like to participate in more STEM activities in the future."
+                }
+              ]
+            },
+            {
+              "key": "stem_outside",
+              "type": "choice",
+              "question": "How often do you participate in STEM activities outside of your regular school classes?",
+              "options": [
+                "Never",
+                "Rarely",
+                "Sometimes",
+                "Often",
+                "Very often"
+              ]
+            }
+          ]
+        },
+        "volunteer": {
+          "title": "Student Volunteer Survey",
+          "intro": "Please answer the following questions based on your current skills and confidence before volunteering at Math & Science Night.",
+          "questions": [
+            {
+              "key": "volunteered_before",
+              "type": "choice",
+              "question": "Have you volunteered at Math & Science Night before?",
+              "options": [
+                "Yes",
+                "No"
+              ]
+            },
+            {
+              "key": "teaching_experience",
+              "type": "choice",
+              "question": "How much previous experience do you have teaching, mentoring, or explaining STEM concepts to younger students?",
+              "options": [
+                "None",
+                "A little",
+                "Some",
+                "A lot"
+              ]
+            },
+            {
+              "key": "volunteer_skills",
+              "type": "grid",
+              "question": "How much do you agree with each statement?",
+              "rows": [
+                {
+                  "key": "explain",
+                  "text": "I feel confident explaining STEM concepts to younger students."
+                },
+                {
+                  "key": "lead_activity",
+                  "text": "I feel confident leading a STEM activity."
+                },
+                {
+                  "key": "communicate",
+                  "text": "I communicate effectively with younger students."
+                },
+                {
+                  "key": "teamwork",
+                  "text": "I work effectively with other students as part of a team."
+                },
+                {
+                  "key": "leadership",
+                  "text": "I feel confident taking responsibility in a leadership role."
+                },
+                {
+                  "key": "adapt",
+                  "text": "I can change how I explain something when another person does not understand it."
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "after": {
+      "title": "Math & Science Night Research Survey: After the Event",
+      "label": "After the event",
+      "time": "3–4 minutes",
+      "intro": [
+        "This brief survey is part of a research study evaluating Math & Science Night at Dulles High School. The survey asks about your experience at Math & Science Night and your attitudes toward STEM after participating in the event.",
+        "Participation is voluntary. Your answers will be used only for research and program evaluation. Do not enter your name, student ID, email address, or other identifying information.",
+        "There are no right or wrong answers. Please answer honestly.",
+        "Estimated time: 3–4 minutes."
+      ],
+      "role": {
+        "key": "role",
+        "question": "Which best describes you?",
+        "options": [
+          {
+            "value": "Elementary school student attending Math & Science Night",
+            "branch": "attendee"
+          },
+          {
+            "value": "Middle school student attending Math & Science Night",
+            "branch": "attendee"
+          },
+          {
+            "value": "High school student volunteer",
+            "branch": "volunteer"
+          }
+        ]
+      },
+      "common": [
+        {
+          "key": "grade",
+          "type": "choice",
+          "question": "What grade range are you in?",
+          "options": [
+            "1st Grade",
+            "2nd Grade",
+            "3rd Grade",
+            "4th Grade",
+            "5th Grade",
+            "6th Grade",
+            "7th Grade",
+            "8th Grade",
+            "High School Volunteer"
+          ],
+          "other": true
+        }
+      ],
+      "branches": {
+        "attendee": {
+          "title": "Student Attendee Survey",
+          "intro": "Please answer the following questions based on how you feel before participating in Math & Science Night.",
+          "questions": [
+            {
+              "key": "attended_before",
+              "type": "choice",
+              "question": "Have you attended Math & Science Night before?",
+              "options": [
+                "Yes",
+                "No",
+                "Not Sure"
+              ]
+            },
+            {
+              "key": "stem_attitudes",
+              "type": "grid",
+              "question": "How much do you agree with each statement?",
+              "rows": [
+                {
+                  "key": "interested",
+                  "text": "I am interested in science, technology, engineering, or math."
+                },
+                {
+                  "key": "hands_on",
+                  "text": "I enjoy doing hands-on STEM activities."
+                },
+                {
+                  "key": "confident_trying",
+                  "text": "I feel confident trying a STEM activity, even when it seems difficult."
+                },
+                {
+                  "key": "curious",
+                  "text": "I am curious to learn more about STEM topics."
+                },
+                {
+                  "key": "more_activities",
+                  "text": "I would like to participate in more STEM activities in the future."
+                }
+              ]
+            },
+            {
+              "key": "event_experience",
+              "type": "grid",
+              "question": "Thinking about your experience at Math & Science Night, how much do you agree with each statement?",
+              "rows": [
+                {
+                  "key": "learned_new",
+                  "text": "I learned something new at Math & Science Night."
+                },
+                {
+                  "key": "hands_on_helped",
+                  "text": "The hands-on activities helped me understand STEM concepts better."
+                },
+                {
+                  "key": "interest_increased",
+                  "text": "Math & Science Night increased my interest in STEM."
+                },
+                {
+                  "key": "more_confident",
+                  "text": "I feel more confident participating in STEM activities after attending Math & Science Night."
+                },
+                {
+                  "key": "discovered_topic",
+                  "text": "I discovered a STEM topic I would like to learn more about."
+                },
+                {
+                  "key": "comfortable",
+                  "text": "I felt comfortable asking questions and participating."
+                },
+                {
+                  "key": "attend_again",
+                  "text": "I would like to attend Math & Science Night again."
+                }
+              ]
+            },
+            {
+              "key": "interest_change",
+              "type": "choice",
+              "question": "Compared with before Math & Science Night, how interested are you in STEM now?",
+              "options": [
+                "Much less interested",
+                "A little less interested",
+                "About the same",
+                "A little more interested",
+                "Much more interested"
+              ]
+            },
+            {
+              "key": "confidence_change",
+              "type": "choice",
+              "question": "Compared with before Math & Science Night, how confident do you feel participating in STEM activities now?",
+              "options": [
+                "Much less interested",
+                "A little less interested",
+                "About the same",
+                "A little more interested",
+                "Much more interested"
+              ]
+            },
+            {
+              "key": "activities_count",
+              "type": "choice",
+              "question": "Approximately how many different activities or exhibits did you participate in?",
+              "options": [
+                "1–2",
+                "3–5",
+                "6–8",
+                "9 or more",
+                "Not sure"
+              ]
+            },
+            {
+              "key": "favorite_type",
+              "type": "choice",
+              "question": "Which type of STEM activity interested you the most?",
+              "options": [
+                "Biology / Life Science",
+                "Chemistry",
+                "Physics",
+                "Mathematics",
+                "Engineering",
+                "Robotics / Computer Science",
+                "Environmental Science",
+                "Other",
+                "Not sure"
+              ]
+            },
+            {
+              "key": "learned_text",
+              "type": "text",
+              "question": "What is one new thing you learned or became interested in at Math & Science Night?",
+              "maxLength": 1000
+            },
+            {
+              "key": "improve_text",
+              "type": "text",
+              "question": "What is one thing we could change to make Math & Science Night better next year?",
+              "maxLength": 1000
+            }
+          ]
+        },
+        "volunteer": {
+          "title": "Student Volunteer Survey",
+          "intro": "Please answer the following questions based on your skills and experience after volunteering at Math & Science Night.",
+          "questions": [
+            {
+              "key": "volunteer_skills",
+              "type": "grid",
+              "question": "How much do you agree with each statement?",
+              "rows": [
+                {
+                  "key": "explain",
+                  "text": "I feel confident explaining STEM concepts to younger students."
+                },
+                {
+                  "key": "lead_activity",
+                  "text": "I feel confident leading a STEM activity."
+                },
+                {
+                  "key": "communicate",
+                  "text": "I communicate effectively with younger students."
+                },
+                {
+                  "key": "teamwork",
+                  "text": "I work effectively with other students as part of a team."
+                },
+                {
+                  "key": "leadership",
+                  "text": "I feel confident taking responsibility in a leadership role."
+                },
+                {
+                  "key": "adapt",
+                  "text": "I can change how I explain something when another person does not understand it."
+                }
+              ]
+            },
+            {
+              "key": "skills_improved",
+              "type": "grid",
+              "question": "Math & Science Night helped me improve my ability to:",
+              "rows": [
+                {
+                  "key": "explain",
+                  "text": "Explain STEM concepts to younger students"
+                },
+                {
+                  "key": "communicate",
+                  "text": "Communicate clearly with others"
+                },
+                {
+                  "key": "teamwork",
+                  "text": "Work effectively as part of a team"
+                },
+                {
+                  "key": "lead",
+                  "text": "Lead other students"
+                },
+                {
+                  "key": "adapt",
+                  "text": "Adapt when something does not go as planned"
+                },
+                {
+                  "key": "inspire",
+                  "text": "Help younger students become interested in STEM"
+                }
+              ]
+            },
+            {
+              "key": "skill_developed",
+              "type": "text",
+              "question": "What is one skill you believe you developed or improved through volunteering at Math & Science Night?",
+              "maxLength": 1000
+            },
+            {
+              "key": "volunteer_improve",
+              "type": "text",
+              "question": "What is one thing that could improve the volunteer experience at Math & Science Night next year?",
+              "maxLength": 1000
+            }
+          ]
+        }
+      }
+    }
+  }
+}

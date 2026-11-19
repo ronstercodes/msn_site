@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Survey Results :: Math and Science Night</title>
+  <link rel="icon" type="image/png" href="/assets/img/logo.png">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <header class="sidebar">
+    <div class="brand">
+      <a class="brand-logo" href="/"><img src="/assets/img/logo.png" alt="Math &amp; Science Night logo"></a>
+      <a class="brand-title" href="/"><strong>Math</strong> &amp; <strong>Science Night</strong></a>
+      <div class="brand-slogan">PRESENTED BY:<br>SNHS x SciNOW x MAO</div>
+    </div>
+    <button class="menu-toggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/about-me/">Our Team</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="side-footer">&copy; 2026 Math &amp; Science Night</div>
+  </header>
+
+  <main class="main">
+
+    <section class="section">
+      <div class="section-inner">
+        <h1><strong>Survey Results</strong></h1>
+
+        <form id="results-key-form" class="survey">
+          <div class="field">
+            <label class="q-label" for="results-key">Results key</label>
+            <input type="password" id="results-key" autocomplete="current-password" required>
+          </div>
+          <div class="survey-actions">
+            <button type="submit" class="btn">Show results</button>
+            <p id="results-status" class="survey-status" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+
+        <div id="results" hidden>
+          <div class="results-bar">
+            <label for="results-form">Survey</label>
+            <select id="results-form"></select>
+          </div>
+
+          <div class="stats" id="stats"></div>
+
+          <p><button type="button" class="btn" id="download-csv">Download as spreadsheet (CSV)</button></p>
+
+          <div id="summary"></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="/js/main.js"></script>
+  <script src="/js/survey-results.js"></script>
+</body>
+</html>
