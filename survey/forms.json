@@ -31,7 +31,7 @@
             "branch": "attendee"
           },
           {
-            "value": "High school student volunteer",
+            "value": "Student volunteer or booth host",
             "branch": "volunteer"
           }
         ]
@@ -193,7 +193,7 @@
             "branch": "attendee"
           },
           {
-            "value": "High school student volunteer",
+            "value": "Student volunteer or booth host",
             "branch": "volunteer"
           }
         ]
