@@ -195,7 +195,7 @@
       "branches": {
         "attendee": {
           "title": "Student Attendee Survey",
-          "intro": "Please answer the following questions based on how you feel before participating in Math & Science Night.",
+          "intro": "Please answer the following questions based on how you feel after participating in Math & Science Night.",
           "questions": [
             {
               "key": "grade",
@@ -302,11 +302,11 @@
               "type": "choice",
               "question": "Compared with before Math & Science Night, how confident do you feel participating in STEM activities now?",
               "options": [
-                "Much less interested",
-                "A little less interested",
+                "Much less confident",
+                "A little less confident",
                 "About the same",
-                "A little more interested",
-                "Much more interested"
+                "A little more confident",
+                "Much more confident"
               ]
             },
             {
