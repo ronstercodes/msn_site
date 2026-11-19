@@ -745,6 +745,32 @@ button.btn { font-family: var(--font); letter-spacing: inherit; cursor: pointer;
 .swipe-other { margin-top: 18px; }
 @media (prefers-reduced-motion: reduce) { .swipe:not(.has-value) .swipe-readout { animation: none; } }
 
+/* Research approval note */
+.section p.approval {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin: 0 0 26px;
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--text);
+}
+.approval-mark {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  margin-top: 1px;
+  font-size: 14px;
+  font-weight: 800;
+  color: #15151b;
+  background: var(--accent);
+  border-radius: 50%;
+}
+.approval a { color: var(--accent); text-underline-offset: 3px; }
+.approval a:focus-visible { outline: 3px solid var(--white); outline-offset: 3px; border-radius: 3px; }
+
 /* Back buttons */
 .back-link {
   display: inline-flex;
