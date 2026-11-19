@@ -95,14 +95,7 @@
                 {
                   "key": "more_activities",
                   "text": "I would like to participate in more STEM activities in the future."
-                }
-              ]
-            },
-            {
-              "key": "stem_outside",
-              "type": "grid",
-              "question": "How much do you agree with this statement?",
-              "rows": [
+                },
                 {
                   "key": "outside",
                   "text": "I often participate in STEM activities outside of my regular school classes."

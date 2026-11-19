@@ -100,7 +100,9 @@
       const group = pairs.filter(pair => pair.before.branch === branch);
       const rows = [];
       for (const question of sharedGrids(definitions, branch)) {
-        for (const row of question.rows) {
+        const afterQuestion = definitions.forms.after.branches[branch].questions.find(other => other.key === question.key);
+        const sharedRows = question.rows.filter(row => afterQuestion.rows.some(other => other.key === row.key));
+        for (const row of sharedRows) {
           const before = [];
           const after = [];
           const change = [];
@@ -156,14 +158,17 @@
         const prefix = `${BRANCH_SHORT[branch]}: ${question.question}`;
 
         if (question.type === 'grid') {
-          for (const row of question.rows) {
-            const level = (item, pair) => (inBranch(pair) ? levelOf(scale, item.answers, key, row.key) : null);
-            const text = `${prefix} — ${row.text}`;
-            if (b) columns.push({ header: `${text} — Before (1–5)`, get: pair => level(pair.before, pair) ?? '' });
-            if (a) columns.push({ header: `${text} — After (1–5)`, get: pair => level(pair.after, pair) ?? '' });
-            if (a && b) {
+          const rowKeys = [...new Set([...(b ? b.rows : []), ...(a ? a.rows : [])].map(row => row.key))];
+          for (const rowKey of rowKeys) {
+            const beforeRow = b && b.rows.find(row => row.key === rowKey);
+            const afterRow = a && a.rows.find(row => row.key === rowKey);
+            const level = (item, pair) => (inBranch(pair) ? levelOf(scale, item.answers, key, rowKey) : null);
+            const text = `${prefix} \u2014 ${(beforeRow || afterRow).text}`;
+            if (beforeRow) columns.push({ header: `${text} \u2014 Before (1\u20135)`, get: pair => level(pair.before, pair) ?? '' });
+            if (afterRow) columns.push({ header: `${text} \u2014 After (1\u20135)`, get: pair => level(pair.after, pair) ?? '' });
+            if (beforeRow && afterRow) {
               columns.push({
-                header: `${text} — Change (After − Before)`,
+                header: `${text} \u2014 Change (After \u2212 Before)`,
                 get: pair => {
                   const x = level(pair.before, pair);
                   const y = level(pair.after, pair);
