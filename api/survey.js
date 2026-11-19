@@ -36,8 +36,13 @@ module.exports = async function handler(req, res) {
   if (result.error) return res.status(400).json({ error: result.error });
 
   const id = randomUUID();
-  const submittedAt = new Date().toISOString();
-  const record = { id, submittedAt, ...result.value };
+  const now = Date.now();
+  const submittedAt = new Date(now).toISOString();
+  // Start = server time of receipt minus the time the person reported spending. Using elapsed
+  // time (not the phone's clock) means a wrong phone clock cannot skew it.
+  const { durationSeconds } = result.value;
+  const startedAt = durationSeconds === undefined ? undefined : new Date(now - durationSeconds * 1000).toISOString();
+  const record = { id, submittedAt, ...(startedAt ? { startedAt } : {}), ...result.value };
 
   try {
     await put(`${PREFIX}${record.form}/${submittedAt.slice(0, 10)}/${id}.json`, JSON.stringify(record), {

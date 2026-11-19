@@ -8,6 +8,7 @@
   if (!root) return;
 
   const formId = root.dataset.survey;
+  const openedAt = Date.now(); // when this page opened; only the elapsed time is sent
   const thanks = document.getElementById('survey-thanks');
   let definitions = null;
   let form = null;          // the <form> element once built
@@ -448,6 +449,7 @@
             form: formId,
             answers: collect(),
             pairId: pairCode() || undefined,
+            elapsedSeconds: Math.round((Date.now() - openedAt) / 1000),
             website: form.elements.website.value,
           }),
         });

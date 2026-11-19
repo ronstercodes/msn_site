@@ -132,6 +132,12 @@
       statsBox.append(box);
     };
     stat(items.length, 'responses');
+    const seconds = items.map(item => item.durationSeconds).filter(Number.isFinite).sort((x, y) => x - y);
+    if (seconds.length) {
+      const mid = Math.floor(seconds.length / 2);
+      const median = seconds.length % 2 ? seconds[mid] : (seconds[mid - 1] + seconds[mid]) / 2;
+      stat(`${Math.floor(median / 60)}:${String(Math.round(median % 60)).padStart(2, '0')}`, 'median time to finish (min:sec)');
+    }
     for (const branch of Object.keys(form.branches)) {
       stat(inBranch(branch).length, `${form.branches[branch].title.replace(' Survey', '').toLowerCase()}s`);
     }
@@ -183,7 +189,9 @@
     const items = responses.filter(item => item.form === formId);
 
     const columns = [
+      { header: 'Started (UTC)', get: item => item.startedAt },
       { header: 'Submitted at (UTC)', get: item => item.submittedAt },
+      { header: 'Time to finish (seconds)', get: item => item.durationSeconds },
       { header: 'Group', get: item => item.branch },
       { header: form.role.question.trim(), get: item => (item.answers || {}).role },
     ];

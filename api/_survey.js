@@ -11,6 +11,8 @@ const MAX_OTHER = 100;
 const DEFAULT_MAX_TEXT = 1000;
 // Random code the survey saves on a person's device so Before and After can be matched. Optional.
 const PAIR_ID = /^[A-Za-z0-9-]{16,64}$/;
+// How long the person spent on the survey (reported by the page). Anything not 0..24 hours is ignored.
+const MAX_SECONDS = 24 * 60 * 60;
 
 const has = (object, key) => Object.prototype.hasOwnProperty.call(object, key);
 const isPlainObject = value => value !== null && typeof value === 'object' && !Array.isArray(value);
@@ -38,7 +40,7 @@ function checkChoice(question, raw) {
   return { invalid: true };
 }
 
-// Returns { spam: true }, { error: '...' } or { value: { form, branch, pairId?, answers } }.
+// Returns { spam: true }, { error: '...' } or { value: { form, branch, pairId?, durationSeconds?, answers } }.
 function validate(body) {
   if (!isPlainObject(body)) return { error: 'Please fill in the survey and try again.' };
 
@@ -89,7 +91,20 @@ function validate(body) {
   }
 
   const pairId = typeof body.pairId === 'string' && PAIR_ID.test(body.pairId) ? body.pairId : undefined;
-  return { value: { form: formId, branch: chosen.branch, ...(pairId ? { pairId } : {}), answers } };
+  const elapsed = body.elapsedSeconds;
+  const durationSeconds = typeof elapsed === 'number' && Number.isFinite(elapsed) && elapsed >= 0 && elapsed <= MAX_SECONDS
+    ? Math.round(elapsed)
+    : undefined;
+
+  return {
+    value: {
+      form: formId,
+      branch: chosen.branch,
+      ...(pairId ? { pairId } : {}),
+      ...(durationSeconds !== undefined ? { durationSeconds } : {}),
+      answers,
+    },
+  };
 }
 
 module.exports = { PREFIX, definitions, cleanText, validate };

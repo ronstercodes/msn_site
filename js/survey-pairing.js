@@ -143,6 +143,10 @@
       { header: 'Grade (after)', get: pair => pair.after.answers.grade },
       { header: 'Before submitted (UTC)', get: pair => pair.before.submittedAt },
       { header: 'After submitted (UTC)', get: pair => pair.after.submittedAt },
+      { header: 'Before started (UTC)', get: pair => pair.before.startedAt ?? '' },
+      { header: 'Before time to finish (seconds)', get: pair => pair.before.durationSeconds ?? '' },
+      { header: 'After started (UTC)', get: pair => pair.after.startedAt ?? '' },
+      { header: 'After time to finish (seconds)', get: pair => pair.after.durationSeconds ?? '' },
     ];
 
     for (const branch of BRANCHES) {
