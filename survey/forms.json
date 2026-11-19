@@ -31,7 +31,7 @@
             "branch": "attendee"
           },
           {
-            "value": "Student volunteer or booth host",
+            "value": "Booth host",
             "branch": "volunteer"
           }
         ]
@@ -116,6 +116,20 @@
           "intro": "Please answer the following questions based on your current skills and confidence before volunteering at Math & Science Night.",
           "questions": [
             {
+              "key": "grade",
+              "type": "select",
+              "question": "Which grade are you in?",
+              "options": [
+                "9",
+                "10",
+                "11",
+                "12",
+                "College",
+                "Graduated"
+              ],
+              "ui": "swipe"
+            },
+            {
               "key": "volunteered_before",
               "type": "choice",
               "question": "Have you volunteered at Math & Science Night before?",
@@ -193,7 +207,7 @@
             "branch": "attendee"
           },
           {
-            "value": "Student volunteer or booth host",
+            "value": "Booth host",
             "branch": "volunteer"
           }
         ]
@@ -362,6 +376,20 @@
           "title": "Student Volunteer Survey",
           "intro": "Please answer the following questions based on your skills and experience after volunteering at Math & Science Night.",
           "questions": [
+            {
+              "key": "grade",
+              "type": "choice",
+              "question": "What grade range are you in?",
+              "options": [
+                "9th Grade",
+                "10th Grade",
+                "11th Grade",
+                "12th Grade",
+                "College",
+                "Graduated"
+              ],
+              "ui": "swipe"
+            },
             {
               "key": "volunteer_skills",
               "type": "grid",
