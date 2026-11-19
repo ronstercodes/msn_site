@@ -202,6 +202,8 @@
               "type": "choice",
               "question": "What grade range are you in?",
               "options": [
+                "Pre-K",
+                "K",
                 "1st Grade",
                 "2nd Grade",
                 "3rd Grade",
