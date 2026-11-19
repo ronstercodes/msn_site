@@ -9,6 +9,8 @@ const definitions = require('../survey/forms.json');
 const PREFIX = 'survey-responses/';
 const MAX_OTHER = 100;
 const DEFAULT_MAX_TEXT = 1000;
+// Random code the survey saves on a person's device so Before and After can be matched. Optional.
+const PAIR_ID = /^[A-Za-z0-9-]{16,64}$/;
 
 const has = (object, key) => Object.prototype.hasOwnProperty.call(object, key);
 const isPlainObject = value => value !== null && typeof value === 'object' && !Array.isArray(value);
@@ -36,7 +38,7 @@ function checkChoice(question, raw) {
   return { invalid: true };
 }
 
-// Returns { spam: true }, { error: '...' } or { value: { form, branch, answers } }.
+// Returns { spam: true }, { error: '...' } or { value: { form, branch, pairId?, answers } }.
 function validate(body) {
   if (!isPlainObject(body)) return { error: 'Please fill in the survey and try again.' };
 
@@ -86,7 +88,8 @@ function validate(body) {
     }
   }
 
-  return { value: { form: formId, branch: chosen.branch, answers } };
+  const pairId = typeof body.pairId === 'string' && PAIR_ID.test(body.pairId) ? body.pairId : undefined;
+  return { value: { form: formId, branch: chosen.branch, ...(pairId ? { pairId } : {}), answers } };
 }
 
 module.exports = { PREFIX, definitions, cleanText, validate };

@@ -14,6 +14,7 @@
       "intro": [
         "This brief survey is part of a research study evaluating Math & Science Night at Dulles High School. The survey asks about your current experiences and attitudes toward STEM.",
         "Participation is voluntary. Your answers will be used only for research and program evaluation. Responses will be analyzed in summary form and will not be used to identify individual participants.",
+        "To compare how answers change from before to after the event, this survey saves a random code on this device. The code does not contain your name or any personal information.",
         "Please do not enter your name, student ID, email address, or any other personally identifying information in this survey.",
         "There are no right or wrong answers. Please answer honestly.",
         "Estimated time: 2-3 minutes."
@@ -99,14 +100,13 @@
             },
             {
               "key": "stem_outside",
-              "type": "choice",
-              "question": "How often do you participate in STEM activities outside of your regular school classes?",
-              "options": [
-                "Never",
-                "Rarely",
-                "Sometimes",
-                "Often",
-                "Very often"
+              "type": "grid",
+              "question": "How much do you agree with this statement?",
+              "rows": [
+                {
+                  "key": "outside",
+                  "text": "I often participate in STEM activities outside of my regular school classes."
+                }
               ]
             }
           ]
@@ -191,6 +191,7 @@
       "intro": [
         "This brief survey is part of a research study evaluating Math & Science Night at Dulles High School. The survey asks about your experience at Math & Science Night and your attitudes toward STEM after participating in the event.",
         "Participation is voluntary. Your answers will be used only for research and program evaluation. Do not enter your name, student ID, email address, or other identifying information.",
+        "To compare how answers change from before to after the event, this survey uses the random code saved on this device when you took the Before survey. The code does not contain your name or any personal information.",
         "There are no right or wrong answers. Please answer honestly.",
         "Estimated time: 3–4 minutes."
       ],

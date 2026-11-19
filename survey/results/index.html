@@ -48,6 +48,12 @@
         </form>
 
         <div id="results" hidden>
+          <h2 class="results-h">Before &harr; After pairs</h2>
+          <p class="quiet" id="pair-note"></p>
+          <div id="pair-summary"></div>
+          <p><button type="button" class="btn" id="download-pairs">Download paired spreadsheet (CSV)</button></p>
+
+          <h2 class="results-h">Each survey on its own</h2>
           <div class="results-bar">
             <label for="results-form">Survey</label>
             <select id="results-form"></select>
@@ -65,6 +71,7 @@
   </main>
 
   <script src="/js/main.js"></script>
+  <script src="/js/survey-pairing.js"></script>
   <script src="/js/survey-results.js"></script>
 </body>
 </html>

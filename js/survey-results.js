@@ -166,6 +166,17 @@
     return `"${text.replace(/"/g, '""')}"`;
   };
 
+  const saveCsv = (text, filename) => {
+    const blob = new Blob(['\ufeff' + text], { type: 'text/csv;charset=utf-8' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+    document.body.append(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+  };
+
   const downloadCsv = () => {
     const formId = picker.value;
     const form = definitions.forms[formId];
@@ -195,15 +206,67 @@
     const lines = [columns.map(column => csvCell(column.header)).join(',')];
     for (const item of items) lines.push(columns.map(column => csvCell(column.get(item))).join(','));
 
-    const blob = new Blob(['﻿' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = `msn-survey-${formId}-${new Date().toISOString().slice(0, 10)}.csv`;
-    document.body.append(link);
-    link.click();
-    link.remove();
-    setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+    saveCsv(lines.join('\r\n'), `msn-survey-${formId}-${new Date().toISOString().slice(0, 10)}.csv`);
   };
+
+  /* ---------- Before <-> After pairs ---------- */
+
+  let pairing = null;
+
+  const fixed = value => (value === null ? '–' : value.toFixed(2));
+  const signed = value => (value === null ? '–' : `${value > 0 ? '+' : ''}${value.toFixed(2)}`);
+  const plural = (count, word) => `${count} ${word}${count === 1 ? '' : 's'}`;
+
+  const renderPairs = () => {
+    const note = document.getElementById('pair-note');
+    const box = document.getElementById('pair-summary');
+    const button = document.getElementById('download-pairs');
+    box.replaceChildren();
+    if (!window.MSNPairing) {
+      note.textContent = 'Pairing is unavailable (its script did not load).';
+      button.disabled = true;
+      return;
+    }
+
+    pairing = window.MSNPairing.pairResponses(responses);
+    const { stats } = pairing;
+    button.disabled = stats.pairs === 0;
+
+    const left = [];
+    if (stats.waiting) left.push(`${stats.waiting} still waiting for their other survey`);
+    if (stats.ambiguous) left.push(`${stats.ambiguous} on a shared phone that could not be told apart`);
+    if (stats.noCode) left.push(`${stats.noCode} with no code (different phone, or browser data cleared)`);
+    note.textContent =
+      `${plural(stats.pairs, 'matched pair')} from ${plural(stats.before, 'Before response')} and ` +
+      `${plural(stats.after, 'After response')}.` + (left.length ? ` Left out: ${left.join('; ')}.` : '');
+
+    for (const group of window.MSNPairing.summarisePairs(pairing.pairs, definitions)) {
+      if (!group.pairs) continue;
+      box.append(el('h3', 'results-sub', `${group.label} (${plural(group.pairs, 'pair')})`));
+      const wrap = el('div', 'table-wrap');
+      const table = el('table', 'results-table');
+      const head = el('tr');
+      for (const text of ['Statement', 'Pairs', 'Before (avg 1–5)', 'After (avg 1–5)', 'Change', 'SD of change']) {
+        head.append(el('th', '', text));
+      }
+      table.append(head);
+      for (const row of group.rows) {
+        const line = el('tr');
+        line.append(el('td', '', row.statement), el('td', '', String(row.n)), el('td', '', fixed(row.meanBefore)),
+          el('td', '', fixed(row.meanAfter)), el('td', 'mean', signed(row.meanChange)), el('td', '', fixed(row.sdChange)));
+        table.append(line);
+      }
+      wrap.append(table);
+      box.append(wrap);
+    }
+    if (!box.children.length) box.append(el('p', 'quiet', 'No matched pairs yet. A pair appears once the same phone has sent a Before and an After survey.'));
+  };
+
+  document.getElementById('download-pairs').addEventListener('click', () => {
+    if (!pairing || !pairing.pairs.length) return;
+    const table = window.MSNPairing.buildPairedTable(pairing.pairs, definitions);
+    saveCsv(window.MSNPairing.toCsv(table), `msn-survey-paired-${new Date().toISOString().slice(0, 10)}.csv`);
+  });
 
   document.getElementById('download-csv').addEventListener('click', downloadCsv);
   picker.addEventListener('change', render);
@@ -239,6 +302,7 @@
       if (previous && definitions.forms[previous]) picker.value = previous;
 
       render();
+      renderPairs();
       panel.hidden = false;
       say(`Updated ${new Date().toLocaleTimeString()}. Press the button again to refresh.`, false);
     } catch (error) {

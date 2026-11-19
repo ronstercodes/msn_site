@@ -21,6 +21,32 @@
     return node;
   };
 
+  /* ---------- random pair code, so Before and After answers can be matched ---------- */
+
+  const PAIR_KEY = 'msn-pair-id';
+
+  const randomCode = () => {
+    if (window.crypto && typeof window.crypto.randomUUID === 'function') return window.crypto.randomUUID();
+    const bytes = new Uint8Array(16);
+    window.crypto.getRandomValues(bytes);
+    return Array.from(bytes, byte => byte.toString(16).padStart(2, '0')).join('');
+  };
+
+  // The Before survey makes a code (once per device) and saves it; the After survey reads it.
+  // Storage can be blocked (private browsing), in which case the answers are simply unmatched.
+  const pairCode = () => {
+    try {
+      let code = window.localStorage.getItem(PAIR_KEY);
+      if (!code && formId === 'before') {
+        code = randomCode();
+        window.localStorage.setItem(PAIR_KEY, code);
+      }
+      return code || '';
+    } catch (_) {
+      return '';
+    }
+  };
+
   /* ---------- question builders ---------- */
 
   const radioLabel = (name, value, text, required) => {
@@ -374,6 +400,7 @@
           body: JSON.stringify({
             form: formId,
             answers: collect(),
+            pairId: pairCode() || undefined,
             website: form.elements.website.value,
           }),
         });
