@@ -267,6 +267,40 @@
       wrap.append(table);
       box.append(wrap);
     }
+    for (const item of window.MSNPairing.summariseSwitches(pairing.pairs, definitions)) {
+      if (!item.n) continue;
+      box.append(el('h3', 'results-sub', `${item.question} — Before → After (${item.label}, ${plural(item.n, 'pair')})`));
+      const share = count => `${count} of ${item.n} (${Math.round((count / item.n) * 100)}%)`;
+      const exact = item.p < 0.001 ? '< 0.001' : item.p.toFixed(3);
+      box.append(el('p', 'quiet',
+        `Naming a STEM answer: Before ${share(item.stemBefore)} → After ${share(item.stemAfter)}. ` +
+        `${item.joinedStem} moved into STEM and ${item.leftStem} moved out. ` +
+        `Exact McNemar test p = ${exact} (it only counts the ${plural(item.joinedStem + item.leftStem, 'person').replace('persons', 'people')} who switched sides, so treat it as a rough guide, not proof).`));
+
+      const used = item.categories.filter(name =>
+        item.categories.some(other => item.matrix[name][other] > 0 || item.matrix[other][name] > 0));
+      const wrap = el('div', 'table-wrap');
+      const table = el('table', 'results-table');
+      const head = el('tr');
+      head.append(el('th', '', 'Before ↓  After →'));
+      for (const name of used) head.append(el('th', '', name));
+      head.append(el('th', '', 'Total'));
+      table.append(head);
+      for (const row of used) {
+        const line = el('tr');
+        line.append(el('td', '', row));
+        let total = 0;
+        for (const column of used) {
+          const count = item.matrix[row][column];
+          total += count;
+          line.append(el('td', row === column ? 'mean' : '', String(count)));
+        }
+        line.append(el('td', '', String(total)));
+        table.append(line);
+      }
+      wrap.append(table);
+      box.append(wrap);
+    }
     if (!box.children.length) box.append(el('p', 'quiet', 'No matched pairs yet. A pair appears once the same phone has sent a Before and an After survey.'));
   };
 

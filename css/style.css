@@ -611,6 +611,17 @@ button.btn { font-family: var(--font); letter-spacing: inherit; cursor: pointer;
 .choice .other-text { flex: 1; min-width: 0; padding: 8px 12px; min-height: 40px; }
 @media (hover: hover) { .choice:hover { border-color: var(--accent); } }
 
+.choices.tiles { grid-template-columns: 1fr 1fr; gap: 10px; }
+.tiles .choice { min-height: 58px; padding: 10px 12px; gap: 10px; }
+.tiles .choice .mark { width: 22px; height: 22px; }
+.tiles .choice .mark::after { width: 10px; height: 10px; }
+.tiles .choice-text { font-size: 16px; }
+.tiles .choice:last-child:nth-child(odd) { grid-column: 1 / -1; }
+@media (min-width: 640px) {
+  .choices.tiles { grid-template-columns: repeat(3, 1fr); }
+  .tiles .choice:last-child:nth-child(odd) { grid-column: auto; }
+}
+
 .likert-rows { display: grid; gap: 0; }
 .likert-row { padding: 22px 0 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.14); }
 .likert-row:first-child { padding-top: 6px; }

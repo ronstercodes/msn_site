@@ -129,6 +129,71 @@
     });
   }
 
+  /* ---------- did a choice change? (favorite subject, field of study) ---------- */
+
+  const factorials = [0, 0];
+  const logFactorial = n => {
+    for (let i = factorials.length; i <= n; i += 1) factorials[i] = factorials[i - 1] + Math.log(i);
+    return factorials[n];
+  };
+
+  // Exact two-sided McNemar test. b = people who left STEM, c = people who joined STEM.
+  // It only uses the people whose answer switched sides, so most pairs add nothing to it.
+  function mcnemarExact(b, c) {
+    const n = b + c;
+    if (n === 0) return 1;
+    let sum = 0;
+    for (let i = 0; i <= Math.min(b, c); i += 1) {
+      sum += Math.exp(logFactorial(n) - logFactorial(i) - logFactorial(n - i) - n * Math.LN2);
+    }
+    return Math.min(1, 2 * sum);
+  }
+
+  const own = (object, key) => Object.prototype.hasOwnProperty.call(object, key);
+
+  // For each choice question that has a defined "STEM" side (favorite subject, field to study)
+  // and is asked in both surveys: a Before -> After table and the share naming a STEM answer.
+  function summariseSwitches(pairs, definitions) {
+    const out = [];
+    for (const branch of BRANCHES) {
+      const group = pairs.filter(pair => pair.before.branch === branch);
+      const afterQuestions = definitions.forms.after.branches[branch].questions;
+      for (const question of definitions.forms.before.branches[branch].questions) {
+        if (!question.stemOptions || !afterQuestions.some(other => other.key === question.key)) continue;
+        const stem = new Set(question.stemOptions);
+        const categories = question.options;
+        const matrix = {};
+        for (const row of categories) {
+          matrix[row] = {};
+          for (const column of categories) matrix[row][column] = 0;
+        }
+        let n = 0;
+        let stemBefore = 0;
+        let stemAfter = 0;
+        let leftStem = 0;
+        let joinedStem = 0;
+        for (const pair of group) {
+          const x = (pair.before.answers || {})[question.key];
+          const y = (pair.after.answers || {})[question.key];
+          if (typeof x !== 'string' || typeof y !== 'string' || !own(matrix, x) || !own(matrix, y)) continue;
+          matrix[x][y] += 1;
+          n += 1;
+          const wasStem = stem.has(x);
+          const isStem = stem.has(y);
+          if (wasStem) stemBefore += 1;
+          if (isStem) stemAfter += 1;
+          if (wasStem && !isStem) leftStem += 1;
+          if (!wasStem && isStem) joinedStem += 1;
+        }
+        out.push({
+          branch, label: BRANCH_SHORT[branch], key: question.key, question: question.question,
+          categories, matrix, n, stemBefore, stemAfter, leftStem, joinedStem, p: mcnemarExact(leftStem, joinedStem),
+        });
+      }
+    }
+    return out;
+  }
+
   /* ---------- paired spreadsheet ---------- */
 
   // One row per matched pair. The random code itself is left out; pairs just get a number.
@@ -185,6 +250,15 @@
           const value = (item, pair) => (inBranch(pair) ? (item.answers || {})[key] : '');
           if (b) columns.push({ header: `${prefix} — Before`, get: pair => value(pair.before, pair) ?? '' });
           if (a) columns.push({ header: `${prefix} — After`, get: pair => value(pair.after, pair) ?? '' });
+          if (b && a && b.stemOptions) {
+            const stem = new Set(b.stemOptions);
+            const flag = (item, pair) => {
+              const answer = value(item, pair);
+              return typeof answer === 'string' && answer !== '' ? (stem.has(answer) ? 1 : 0) : '';
+            };
+            columns.push({ header: `${prefix} — STEM answer? Before (1=yes)`, get: pair => flag(pair.before, pair) });
+            columns.push({ header: `${prefix} — STEM answer? After (1=yes)`, get: pair => flag(pair.after, pair) });
+          }
         }
       }
     }
@@ -206,5 +280,5 @@
   const toCsv = table =>
     [table.header, ...table.rows].map(line => line.map(csvCell).join(',')).join('\r\n');
 
-  return { gradeNumber, mean, sd, pairResponses, summarisePairs, buildPairedTable, csvCell, toCsv };
+  return { gradeNumber, mean, sd, mcnemarExact, pairResponses, summarisePairs, summariseSwitches, buildPairedTable, csvCell, toCsv };
 });

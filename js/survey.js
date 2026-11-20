@@ -61,11 +61,25 @@
     return { label, input };
   };
 
+  // Long lists of choices are shuffled for each person so the first ones are not favoured.
+  // The last few ("Other", "Undecided") stay at the end. Only the display order changes.
+  const orderedOptions = question => {
+    if (!question.shuffle) return question.options;
+    const keep = question.keepLast || 0;
+    const movable = question.options.slice(0, question.options.length - keep);
+    const fixed = question.options.slice(question.options.length - keep);
+    for (let i = movable.length - 1; i > 0; i -= 1) {
+      const pick = Math.floor(Math.random() * (i + 1));
+      [movable[i], movable[pick]] = [movable[pick], movable[i]];
+    }
+    return [...movable, ...fixed];
+  };
+
   const buildChoice = question => {
     const set = el('fieldset');
     set.append(el('legend', '', question.question));
-    const list = el('div', 'choices');
-    for (const option of question.options) list.append(radioLabel(question.key, option, option).label);
+    const list = el('div', question.ui === 'tiles' ? 'choices tiles' : 'choices');
+    for (const option of orderedOptions(question)) list.append(radioLabel(question.key, option, option).label);
     if (question.other) {
       const { label } = radioLabel(question.key, 'Other', 'Other:');
       const detail = el('input', 'other-text');

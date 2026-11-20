@@ -58,6 +58,33 @@
               "ui": "swipe"
             },
             {
+              "key": "favorite_subject",
+              "type": "choice",
+              "question": "What is your favorite school subject?",
+              "options": [
+                "Math",
+                "Science",
+                "Computers / Coding",
+                "Engineering / Robotics",
+                "Reading / Writing",
+                "Social Studies",
+                "Art",
+                "Music",
+                "P.E.",
+                "Other",
+                "Undecided"
+              ],
+              "ui": "tiles",
+              "shuffle": true,
+              "keepLast": 2,
+              "stemOptions": [
+                "Math",
+                "Science",
+                "Computers / Coding",
+                "Engineering / Robotics"
+              ]
+            },
+            {
               "key": "attended_before",
               "type": "choice",
               "question": "Have you attended Math & Science Night before?",
@@ -117,6 +144,19 @@
                 "Graduated"
               ],
               "ui": "swipe"
+            },
+            {
+              "key": "plan",
+              "type": "choice",
+              "question": "What field do you plan to study or work in?",
+              "options": [
+                "A STEM field",
+                "A non-STEM field",
+                "Undecided"
+              ],
+              "stemOptions": [
+                "A STEM field"
+              ]
             },
             {
               "key": "volunteered_before",
@@ -216,6 +256,33 @@
               "ui": "swipe"
             },
             {
+              "key": "favorite_subject",
+              "type": "choice",
+              "question": "What is your favorite school subject?",
+              "options": [
+                "Math",
+                "Science",
+                "Computers / Coding",
+                "Engineering / Robotics",
+                "Reading / Writing",
+                "Social Studies",
+                "Art",
+                "Music",
+                "P.E.",
+                "Other",
+                "Undecided"
+              ],
+              "ui": "tiles",
+              "shuffle": true,
+              "keepLast": 2,
+              "stemOptions": [
+                "Math",
+                "Science",
+                "Computers / Coding",
+                "Engineering / Robotics"
+              ]
+            },
+            {
               "key": "attended_before",
               "type": "choice",
               "question": "Have you attended Math & Science Night before?",
@@ -257,22 +324,6 @@
               "type": "grid",
               "question": "Thinking about your experience at Math & Science Night, how much do you agree with each statement?",
               "rows": [
-                {
-                  "key": "learned_new",
-                  "text": "I learned something new at Math & Science Night."
-                },
-                {
-                  "key": "hands_on_helped",
-                  "text": "The hands-on activities helped me understand STEM concepts better."
-                },
-                {
-                  "key": "interest_increased",
-                  "text": "Math & Science Night increased my interest in STEM."
-                },
-                {
-                  "key": "more_confident",
-                  "text": "I feel more confident participating in STEM activities after attending Math & Science Night."
-                },
                 {
                   "key": "discovered_topic",
                   "text": "I discovered a STEM topic I would like to learn more about."
@@ -324,22 +375,6 @@
               ]
             },
             {
-              "key": "favorite_type",
-              "type": "choice",
-              "question": "Which type of STEM activity interested you the most?",
-              "options": [
-                "Biology / Life Science",
-                "Chemistry",
-                "Physics",
-                "Mathematics",
-                "Engineering",
-                "Robotics / Computer Science",
-                "Environmental Science",
-                "Other",
-                "Not sure"
-              ]
-            },
-            {
               "key": "learned_text",
               "type": "text",
               "question": "What is one new thing you learned or became interested in at Math & Science Night?",
@@ -370,6 +405,19 @@
                 "Graduated"
               ],
               "ui": "swipe"
+            },
+            {
+              "key": "plan",
+              "type": "choice",
+              "question": "What field do you plan to study or work in?",
+              "options": [
+                "A STEM field",
+                "A non-STEM field",
+                "Undecided"
+              ],
+              "stemOptions": [
+                "A STEM field"
+              ]
             },
             {
               "key": "volunteer_skills",
@@ -408,20 +456,8 @@
               "question": "Math & Science Night helped me improve my ability to:",
               "rows": [
                 {
-                  "key": "explain",
-                  "text": "Explain STEM concepts to younger students"
-                },
-                {
                   "key": "communicate",
                   "text": "Communicate clearly with others"
-                },
-                {
-                  "key": "teamwork",
-                  "text": "Work effectively as part of a team"
-                },
-                {
-                  "key": "lead",
-                  "text": "Lead other students"
                 },
                 {
                   "key": "adapt",
