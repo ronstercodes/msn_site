@@ -11,8 +11,10 @@
 })(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
 
-  const BRANCHES = ['attendee', 'volunteer'];
-  const BRANCH_SHORT = { attendee: 'Attendee', volunteer: 'Booth host' };
+  // The groups come from the questions file, so adding a group there needs no change here.
+  const BRANCH_SHORT = { attendee: 'Attendee', volunteer: 'Booth host', parent: 'Parent' };
+  const branchesOf = definitions => Object.keys(definitions.forms.before.branches);
+  const labelOf = branch => BRANCH_SHORT[branch] || branch;
 
   // "5" and "5th Grade" are the same grade; the two surveys word it differently.
   const gradeNumber = value => {
@@ -96,7 +98,7 @@
 
   function summarisePairs(pairs, definitions) {
     const scale = definitions.scale;
-    return BRANCHES.map(branch => {
+    return branchesOf(definitions).map(branch => {
       const group = pairs.filter(pair => pair.before.branch === branch);
       const rows = [];
       for (const question of sharedGrids(definitions, branch)) {
@@ -125,7 +127,7 @@
           });
         }
       }
-      return { branch, label: BRANCH_SHORT[branch], pairs: group.length, rows };
+      return { branch, label: labelOf(branch), pairs: group.length, rows };
     });
   }
 
@@ -156,7 +158,7 @@
   // and is asked in both surveys: a Before -> After table and the share giving a tracked answer.
   function summariseSwitches(pairs, definitions) {
     const out = [];
-    for (const branch of BRANCHES) {
+    for (const branch of branchesOf(definitions)) {
       const group = pairs.filter(pair => pair.before.branch === branch);
       const afterQuestions = definitions.forms.after.branches[branch].questions;
       for (const question of definitions.forms.before.branches[branch].questions) {
@@ -187,7 +189,7 @@
           if (!wasTracked && isTracked) joinedTracked += 1;
         }
         out.push({
-          branch, label: BRANCH_SHORT[branch], key: question.key, question: question.question, trackLabel: question.trackLabel || 'Gave a tracked answer',
+          branch, label: labelOf(branch), key: question.key, question: question.question, trackLabel: question.trackLabel || 'Gave a tracked answer',
           categories, matrix, n, trackedBefore, trackedAfter, leftTracked, joinedTracked, p: mcnemarExact(leftTracked, joinedTracked),
         });
       }
@@ -202,7 +204,7 @@
     const scale = definitions.scale;
     const columns = [
       { header: 'Pair #', get: (pair, index) => index + 1 },
-      { header: 'Group', get: pair => BRANCH_SHORT[pair.before.branch] || pair.before.branch },
+      { header: 'Group', get: pair => labelOf(pair.before.branch) },
       { header: 'Role (before)', get: pair => pair.before.answers.role },
       { header: 'Role (after)', get: pair => pair.after.answers.role },
       { header: 'Grade (before)', get: pair => pair.before.answers.grade },
@@ -215,7 +217,7 @@
       { header: 'After time to finish (seconds)', get: pair => pair.after.durationSeconds ?? '' },
     ];
 
-    for (const branch of BRANCHES) {
+    for (const branch of branchesOf(definitions)) {
       const beforeQuestions = definitions.forms.before.branches[branch].questions.filter(q => q.key !== 'grade');
       const afterQuestions = definitions.forms.after.branches[branch].questions.filter(q => q.key !== 'grade');
       const keys = [...new Set([...beforeQuestions.map(q => q.key), ...afterQuestions.map(q => q.key)])];
@@ -225,7 +227,7 @@
         const b = beforeQuestions.find(q => q.key === key);
         const a = afterQuestions.find(q => q.key === key);
         const question = b || a;
-        const prefix = `${BRANCH_SHORT[branch]}: ${question.question}`;
+        const prefix = `${labelOf(branch)}: ${question.question}`;
 
         if (question.type === 'grid') {
           const rowKeys = [...new Set([...(b ? b.rows : []), ...(a ? a.rows : [])].map(row => row.key))];

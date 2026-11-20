@@ -28,6 +28,10 @@
             "branch": "attendee"
           },
           {
+            "value": "Parent or guardian of a student attending MSN",
+            "branch": "parent"
+          },
+          {
             "value": "Booth host",
             "branch": "volunteer"
           }
@@ -207,6 +211,101 @@
               ]
             }
           ]
+        },
+        "parent": {
+          "title": "Parent Survey",
+          "intro": "Please answer the following questions about one child who is attending, based on how they feel before participating in Math & Science Night. If more than one of your children is attending, you can take the survey again for each child.",
+          "questions": [
+            {
+              "key": "grade",
+              "type": "select",
+              "question": "What grade is your child in?",
+              "options": [
+                "Pre-K",
+                "K",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8"
+              ],
+              "ui": "swipe"
+            },
+            {
+              "key": "favorite_area",
+              "type": "choice",
+              "question": "Which area of science, math, or engineering does your child like best?",
+              "options": [
+                "Biology / Life Science",
+                "Chemistry",
+                "Physics",
+                "Mathematics",
+                "Engineering",
+                "Robotics / Computer Science",
+                "Environmental Science",
+                "Other",
+                "Undecided"
+              ],
+              "ui": "tiles",
+              "shuffle": true,
+              "keepLast": 2,
+              "trackOptions": [
+                "Biology / Life Science",
+                "Chemistry",
+                "Physics",
+                "Mathematics",
+                "Engineering",
+                "Robotics / Computer Science",
+                "Environmental Science",
+                "Other"
+              ],
+              "trackLabel": "Picked a specific area (not Undecided)"
+            },
+            {
+              "key": "attended_before",
+              "type": "choice",
+              "question": "Has your child attended Math & Science Night before?",
+              "options": [
+                "Yes",
+                "No",
+                "Not Sure"
+              ]
+            },
+            {
+              "key": "stem_attitudes",
+              "type": "grid",
+              "question": "How much do you agree with each statement?",
+              "rows": [
+                {
+                  "key": "interested",
+                  "text": "My child is interested in science, technology, engineering, or math."
+                },
+                {
+                  "key": "hands_on",
+                  "text": "My child enjoys doing hands-on STEM activities."
+                },
+                {
+                  "key": "confident_trying",
+                  "text": "My child feels confident trying a STEM activity, even when it seems difficult."
+                },
+                {
+                  "key": "curious",
+                  "text": "My child is curious to learn more about STEM topics."
+                },
+                {
+                  "key": "more_activities",
+                  "text": "My child would like to participate in more STEM activities in the future."
+                },
+                {
+                  "key": "outside",
+                  "text": "My child often participates in STEM activities outside of regular school classes."
+                }
+              ]
+            }
+          ]
         }
       }
     },
@@ -228,6 +327,10 @@
           {
             "value": "Student attending MSN",
             "branch": "attendee"
+          },
+          {
+            "value": "Parent or guardian of a student attending MSN",
+            "branch": "parent"
           },
           {
             "value": "Booth host",
@@ -487,6 +590,164 @@
               "key": "volunteer_improve",
               "type": "text",
               "question": "What is one thing that could improve the volunteer experience at Math & Science Night next year?",
+              "maxLength": 1000
+            }
+          ]
+        },
+        "parent": {
+          "title": "Parent Survey",
+          "intro": "Please answer the following questions about one child who attended, based on how they feel after participating in Math & Science Night. If more than one of your children attended, you can take the survey again for each child.",
+          "questions": [
+            {
+              "key": "grade",
+              "type": "choice",
+              "question": "What grade is your child in?",
+              "options": [
+                "Pre-K",
+                "K",
+                "1st Grade",
+                "2nd Grade",
+                "3rd Grade",
+                "4th Grade",
+                "5th Grade",
+                "6th Grade",
+                "7th Grade",
+                "8th Grade"
+              ],
+              "ui": "swipe"
+            },
+            {
+              "key": "favorite_area",
+              "type": "choice",
+              "question": "Which area of science, math, or engineering does your child like best?",
+              "options": [
+                "Biology / Life Science",
+                "Chemistry",
+                "Physics",
+                "Mathematics",
+                "Engineering",
+                "Robotics / Computer Science",
+                "Environmental Science",
+                "Other",
+                "Undecided"
+              ],
+              "ui": "tiles",
+              "shuffle": true,
+              "keepLast": 2,
+              "trackOptions": [
+                "Biology / Life Science",
+                "Chemistry",
+                "Physics",
+                "Mathematics",
+                "Engineering",
+                "Robotics / Computer Science",
+                "Environmental Science",
+                "Other"
+              ],
+              "trackLabel": "Picked a specific area (not Undecided)"
+            },
+            {
+              "key": "attended_before",
+              "type": "choice",
+              "question": "Had your child attended Math & Science Night before this event?",
+              "options": [
+                "Yes",
+                "No",
+                "Not Sure"
+              ]
+            },
+            {
+              "key": "stem_attitudes",
+              "type": "grid",
+              "question": "How much do you agree with each statement?",
+              "rows": [
+                {
+                  "key": "interested",
+                  "text": "My child is interested in science, technology, engineering, or math."
+                },
+                {
+                  "key": "hands_on",
+                  "text": "My child enjoys doing hands-on STEM activities."
+                },
+                {
+                  "key": "confident_trying",
+                  "text": "My child feels confident trying a STEM activity, even when it seems difficult."
+                },
+                {
+                  "key": "curious",
+                  "text": "My child is curious to learn more about STEM topics."
+                },
+                {
+                  "key": "more_activities",
+                  "text": "My child would like to participate in more STEM activities in the future."
+                }
+              ]
+            },
+            {
+              "key": "event_experience",
+              "type": "grid",
+              "question": "Thinking about your child's experience at Math & Science Night, how much do you agree with each statement?",
+              "rows": [
+                {
+                  "key": "discovered_topic",
+                  "text": "My child discovered a STEM topic they would like to learn more about."
+                },
+                {
+                  "key": "comfortable",
+                  "text": "My child felt comfortable asking questions and participating."
+                },
+                {
+                  "key": "attend_again",
+                  "text": "My child would like to attend Math & Science Night again."
+                }
+              ]
+            },
+            {
+              "key": "interest_change",
+              "type": "choice",
+              "question": "Compared with before Math & Science Night, how interested is your child in STEM now?",
+              "options": [
+                "Much less interested",
+                "A little less interested",
+                "About the same",
+                "A little more interested",
+                "Much more interested"
+              ]
+            },
+            {
+              "key": "confidence_change",
+              "type": "choice",
+              "question": "Compared with before Math & Science Night, how confident does your child feel participating in STEM activities now?",
+              "options": [
+                "Much less confident",
+                "A little less confident",
+                "About the same",
+                "A little more confident",
+                "Much more confident"
+              ]
+            },
+            {
+              "key": "activities_count",
+              "type": "choice",
+              "question": "Approximately how many different activities or exhibits did your child participate in?",
+              "options": [
+                "1–2",
+                "3–5",
+                "6–8",
+                "9 or more",
+                "Not sure"
+              ]
+            },
+            {
+              "key": "learned_text",
+              "type": "text",
+              "question": "What is one new thing your child learned or became interested in at Math & Science Night?",
+              "maxLength": 1000
+            },
+            {
+              "key": "improve_text",
+              "type": "text",
+              "question": "What is one thing we could change to make Math & Science Night better next year?",
               "maxLength": 1000
             }
           ]

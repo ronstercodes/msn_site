@@ -30,7 +30,7 @@
     return node;
   };
 
-  const BRANCH_SHORT = { attendee: 'Attendee', volunteer: 'Volunteer' };
+  const BRANCH_SHORT = { attendee: 'Attendee', volunteer: 'Booth host', parent: 'Parent' };
 
   /* ---------- reading the answers ---------- */
 
