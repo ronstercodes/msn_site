@@ -137,8 +137,8 @@
     return factorials[n];
   };
 
-  // Exact two-sided McNemar test. b = people who left STEM, c = people who joined STEM.
-  // It only uses the people whose answer switched sides, so most pairs add nothing to it.
+  // Exact two-sided McNemar test. b = people who left the tracked answers, c = people who joined them.
+  // It only uses the people who switched sides, so most pairs add nothing to it.
   function mcnemarExact(b, c) {
     const n = b + c;
     if (n === 0) return 1;
@@ -151,16 +151,17 @@
 
   const own = (object, key) => Object.prototype.hasOwnProperty.call(object, key);
 
-  // For each choice question that has a defined "STEM" side (favorite subject, field to study)
-  // and is asked in both surveys: a Before -> After table and the share naming a STEM answer.
+  // For each choice question that has a tracked answer set (favorite area: any specific area vs Undecided;
+  // field to study: a STEM field)
+  // and is asked in both surveys: a Before -> After table and the share giving a tracked answer.
   function summariseSwitches(pairs, definitions) {
     const out = [];
     for (const branch of BRANCHES) {
       const group = pairs.filter(pair => pair.before.branch === branch);
       const afterQuestions = definitions.forms.after.branches[branch].questions;
       for (const question of definitions.forms.before.branches[branch].questions) {
-        if (!question.stemOptions || !afterQuestions.some(other => other.key === question.key)) continue;
-        const stem = new Set(question.stemOptions);
+        if (!question.trackOptions || !afterQuestions.some(other => other.key === question.key)) continue;
+        const tracked = new Set(question.trackOptions);
         const categories = question.options;
         const matrix = {};
         for (const row of categories) {
@@ -168,26 +169,26 @@
           for (const column of categories) matrix[row][column] = 0;
         }
         let n = 0;
-        let stemBefore = 0;
-        let stemAfter = 0;
-        let leftStem = 0;
-        let joinedStem = 0;
+        let trackedBefore = 0;
+        let trackedAfter = 0;
+        let leftTracked = 0;
+        let joinedTracked = 0;
         for (const pair of group) {
           const x = (pair.before.answers || {})[question.key];
           const y = (pair.after.answers || {})[question.key];
           if (typeof x !== 'string' || typeof y !== 'string' || !own(matrix, x) || !own(matrix, y)) continue;
           matrix[x][y] += 1;
           n += 1;
-          const wasStem = stem.has(x);
-          const isStem = stem.has(y);
-          if (wasStem) stemBefore += 1;
-          if (isStem) stemAfter += 1;
-          if (wasStem && !isStem) leftStem += 1;
-          if (!wasStem && isStem) joinedStem += 1;
+          const wasTracked = tracked.has(x);
+          const isTracked = tracked.has(y);
+          if (wasTracked) trackedBefore += 1;
+          if (isTracked) trackedAfter += 1;
+          if (wasTracked && !isTracked) leftTracked += 1;
+          if (!wasTracked && isTracked) joinedTracked += 1;
         }
         out.push({
-          branch, label: BRANCH_SHORT[branch], key: question.key, question: question.question,
-          categories, matrix, n, stemBefore, stemAfter, leftStem, joinedStem, p: mcnemarExact(leftStem, joinedStem),
+          branch, label: BRANCH_SHORT[branch], key: question.key, question: question.question, trackLabel: question.trackLabel || 'Gave a tracked answer',
+          categories, matrix, n, trackedBefore, trackedAfter, leftTracked, joinedTracked, p: mcnemarExact(leftTracked, joinedTracked),
         });
       }
     }
@@ -250,14 +251,14 @@
           const value = (item, pair) => (inBranch(pair) ? (item.answers || {})[key] : '');
           if (b) columns.push({ header: `${prefix} — Before`, get: pair => value(pair.before, pair) ?? '' });
           if (a) columns.push({ header: `${prefix} — After`, get: pair => value(pair.after, pair) ?? '' });
-          if (b && a && b.stemOptions) {
-            const stem = new Set(b.stemOptions);
+          if (b && a && b.trackOptions) {
+            const tracked = new Set(b.trackOptions);
             const flag = (item, pair) => {
               const answer = value(item, pair);
-              return typeof answer === 'string' && answer !== '' ? (stem.has(answer) ? 1 : 0) : '';
+              return typeof answer === 'string' && answer !== '' ? (tracked.has(answer) ? 1 : 0) : '';
             };
-            columns.push({ header: `${prefix} — STEM answer? Before (1=yes)`, get: pair => flag(pair.before, pair) });
-            columns.push({ header: `${prefix} — STEM answer? After (1=yes)`, get: pair => flag(pair.after, pair) });
+            columns.push({ header: `${prefix} — ${b.trackLabel || 'Tracked answer'}? Before (1=yes)`, get: pair => flag(pair.before, pair) });
+            columns.push({ header: `${prefix} — ${b.trackLabel || 'Tracked answer'}? After (1=yes)`, get: pair => flag(pair.after, pair) });
           }
         }
       }

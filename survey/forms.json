@@ -58,31 +58,34 @@
               "ui": "swipe"
             },
             {
-              "key": "favorite_subject",
+              "key": "favorite_area",
               "type": "choice",
-              "question": "What is your favorite school subject?",
+              "question": "Which area of science, math, or engineering do you like best?",
               "options": [
-                "Math",
-                "Science",
-                "Computers / Coding",
-                "Engineering / Robotics",
-                "Reading / Writing",
-                "Social Studies",
-                "Art",
-                "Music",
-                "P.E.",
+                "Biology / Life Science",
+                "Chemistry",
+                "Physics",
+                "Mathematics",
+                "Engineering",
+                "Robotics / Computer Science",
+                "Environmental Science",
                 "Other",
                 "Undecided"
               ],
               "ui": "tiles",
               "shuffle": true,
               "keepLast": 2,
-              "stemOptions": [
-                "Math",
-                "Science",
-                "Computers / Coding",
-                "Engineering / Robotics"
-              ]
+              "trackOptions": [
+                "Biology / Life Science",
+                "Chemistry",
+                "Physics",
+                "Mathematics",
+                "Engineering",
+                "Robotics / Computer Science",
+                "Environmental Science",
+                "Other"
+              ],
+              "trackLabel": "Picked a specific area (not Undecided)"
             },
             {
               "key": "attended_before",
@@ -154,9 +157,10 @@
                 "A non-STEM field",
                 "Undecided"
               ],
-              "stemOptions": [
+              "trackOptions": [
                 "A STEM field"
-              ]
+              ],
+              "trackLabel": "Naming a STEM field"
             },
             {
               "key": "volunteered_before",
@@ -256,31 +260,34 @@
               "ui": "swipe"
             },
             {
-              "key": "favorite_subject",
+              "key": "favorite_area",
               "type": "choice",
-              "question": "What is your favorite school subject?",
+              "question": "Which area of science, math, or engineering do you like best?",
               "options": [
-                "Math",
-                "Science",
-                "Computers / Coding",
-                "Engineering / Robotics",
-                "Reading / Writing",
-                "Social Studies",
-                "Art",
-                "Music",
-                "P.E.",
+                "Biology / Life Science",
+                "Chemistry",
+                "Physics",
+                "Mathematics",
+                "Engineering",
+                "Robotics / Computer Science",
+                "Environmental Science",
                 "Other",
                 "Undecided"
               ],
               "ui": "tiles",
               "shuffle": true,
               "keepLast": 2,
-              "stemOptions": [
-                "Math",
-                "Science",
-                "Computers / Coding",
-                "Engineering / Robotics"
-              ]
+              "trackOptions": [
+                "Biology / Life Science",
+                "Chemistry",
+                "Physics",
+                "Mathematics",
+                "Engineering",
+                "Robotics / Computer Science",
+                "Environmental Science",
+                "Other"
+              ],
+              "trackLabel": "Picked a specific area (not Undecided)"
             },
             {
               "key": "attended_before",
@@ -415,9 +422,10 @@
                 "A non-STEM field",
                 "Undecided"
               ],
-              "stemOptions": [
+              "trackOptions": [
                 "A STEM field"
-              ]
+              ],
+              "trackLabel": "Naming a STEM field"
             },
             {
               "key": "volunteer_skills",

@@ -273,9 +273,9 @@
       const share = count => `${count} of ${item.n} (${Math.round((count / item.n) * 100)}%)`;
       const exact = item.p < 0.001 ? '< 0.001' : item.p.toFixed(3);
       box.append(el('p', 'quiet',
-        `Naming a STEM answer: Before ${share(item.stemBefore)} → After ${share(item.stemAfter)}. ` +
-        `${item.joinedStem} moved into STEM and ${item.leftStem} moved out. ` +
-        `Exact McNemar test p = ${exact} (it only counts the ${plural(item.joinedStem + item.leftStem, 'person').replace('persons', 'people')} who switched sides, so treat it as a rough guide, not proof).`));
+        `${item.trackLabel}: Before ${share(item.trackedBefore)} → After ${share(item.trackedAfter)}. ` +
+        `${item.joinedTracked} moved in and ${item.leftTracked} moved out. ` +
+        `Exact McNemar test p = ${exact} (it only counts the ${plural(item.joinedTracked + item.leftTracked, 'person').replace('persons', 'people')} who switched sides, so treat it as a rough guide, not proof).`));
 
       const used = item.categories.filter(name =>
         item.categories.some(other => item.matrix[name][other] > 0 || item.matrix[other][name] > 0));
