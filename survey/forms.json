@@ -393,16 +393,6 @@
               "trackLabel": "Picked a specific area (not Undecided)"
             },
             {
-              "key": "attended_before",
-              "type": "choice",
-              "question": "Have you attended Math & Science Night before?",
-              "options": [
-                "Yes",
-                "No",
-                "Not Sure"
-              ]
-            },
-            {
               "key": "stem_attitudes",
               "type": "grid",
               "question": "How much do you agree with each statement?",
@@ -441,10 +431,6 @@
                 {
                   "key": "comfortable",
                   "text": "I felt comfortable asking questions and participating."
-                },
-                {
-                  "key": "attend_again",
-                  "text": "I would like to attend Math & Science Night again."
                 }
               ]
             },
@@ -461,18 +447,6 @@
               ]
             },
             {
-              "key": "confidence_change",
-              "type": "choice",
-              "question": "Compared with before Math & Science Night, how confident do you feel participating in STEM activities now?",
-              "options": [
-                "Much less confident",
-                "A little less confident",
-                "About the same",
-                "A little more confident",
-                "Much more confident"
-              ]
-            },
-            {
               "key": "activities_count",
               "type": "choice",
               "question": "Approximately how many different activities or exhibits did you participate in?",
@@ -483,18 +457,6 @@
                 "9 or more",
                 "Not sure"
               ]
-            },
-            {
-              "key": "learned_text",
-              "type": "text",
-              "question": "What is one new thing you learned or became interested in at Math & Science Night?",
-              "maxLength": 1000
-            },
-            {
-              "key": "improve_text",
-              "type": "text",
-              "question": "What is one thing we could change to make Math & Science Night better next year?",
-              "maxLength": 1000
             }
           ]
         },
@@ -567,14 +529,6 @@
               "question": "Math & Science Night helped me improve my ability to:",
               "rows": [
                 {
-                  "key": "communicate",
-                  "text": "Communicate clearly with others"
-                },
-                {
-                  "key": "adapt",
-                  "text": "Adapt when something does not go as planned"
-                },
-                {
                   "key": "inspire",
                   "text": "Help younger students become interested in STEM"
                 }
@@ -584,12 +538,6 @@
               "key": "skill_developed",
               "type": "text",
               "question": "What is one skill you believe you developed or improved through volunteering at Math & Science Night?",
-              "maxLength": 1000
-            },
-            {
-              "key": "volunteer_improve",
-              "type": "text",
-              "question": "What is one thing that could improve the volunteer experience at Math & Science Night next year?",
               "maxLength": 1000
             }
           ]
@@ -647,16 +595,6 @@
               "trackLabel": "Picked a specific area (not Undecided)"
             },
             {
-              "key": "attended_before",
-              "type": "choice",
-              "question": "Had your child attended Math & Science Night before this event?",
-              "options": [
-                "Yes",
-                "No",
-                "Not Sure"
-              ]
-            },
-            {
               "key": "stem_attitudes",
               "type": "grid",
               "question": "How much do you agree with each statement?",
@@ -695,10 +633,6 @@
                 {
                   "key": "comfortable",
                   "text": "My child felt comfortable asking questions and participating."
-                },
-                {
-                  "key": "attend_again",
-                  "text": "My child would like to attend Math & Science Night again."
                 }
               ]
             },
@@ -715,18 +649,6 @@
               ]
             },
             {
-              "key": "confidence_change",
-              "type": "choice",
-              "question": "Compared with before Math & Science Night, how confident does your child feel participating in STEM activities now?",
-              "options": [
-                "Much less confident",
-                "A little less confident",
-                "About the same",
-                "A little more confident",
-                "Much more confident"
-              ]
-            },
-            {
               "key": "activities_count",
               "type": "choice",
               "question": "Approximately how many different activities or exhibits did your child participate in?",
@@ -737,18 +659,6 @@
                 "9 or more",
                 "Not sure"
               ]
-            },
-            {
-              "key": "learned_text",
-              "type": "text",
-              "question": "What is one new thing your child learned or became interested in at Math & Science Night?",
-              "maxLength": 1000
-            },
-            {
-              "key": "improve_text",
-              "type": "text",
-              "question": "What is one thing we could change to make Math & Science Night better next year?",
-              "maxLength": 1000
             }
           ]
         }
