@@ -457,6 +457,12 @@
                 "41–50",
                 "51+"
               ]
+            },
+            {
+              "key": "learned_text",
+              "type": "text",
+              "question": "What is one new thing you learned or became interested in at Math & Science Night?",
+              "maxLength": 1000
             }
           ]
         },
@@ -659,6 +665,12 @@
                 "41–50",
                 "51+"
               ]
+            },
+            {
+              "key": "learned_text",
+              "type": "text",
+              "question": "What is one new thing your child learned or became interested in at Math & Science Night?",
+              "maxLength": 1000
             }
           ]
         }
